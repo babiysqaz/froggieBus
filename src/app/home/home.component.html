@@ -1,0 +1,27 @@
+<div class="container">
+  <nav>
+    <ul>
+      <li (click)="switchTab(0)" [ngClass]="{'select':tabSelectArr[0]}">找路線</li>
+      <li (click)="switchTab(1)" [ngClass]="{'select':tabSelectArr[1]}">找站牌</li>
+      <li (click)="switchTab(2)" [ngClass]="{'select':tabSelectArr[2]}">附近車站</li>
+      <li (click)="routeLogin()">回首頁</li>
+    </ul>
+  </nav>
+
+  <main>
+    <div class="title" (click)="routeLogin()">
+      <img src="assets/frogStandWhite.svg" alt="">
+      <span>蛙蛙搭車Go</span>
+    </div>
+    <div id="selectContainer" class="inputBox">
+      <select class="boxStyle" name="" id="">
+        <option value="">縣市</option>
+      </select>
+    </div>
+    <input class="inputBox boxStyle" type="text" [placeholder]='defaultText'>
+    <button class="searchBtn">
+      <img src="assets/search.svg" alt="">
+    </button>
+  </main>
+
+</div>

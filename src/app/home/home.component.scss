@@ -1,0 +1,98 @@
+@import "src/variable.scss";
+
+.container {
+  margin-top: 3vh;
+  nav {
+    ul {
+      display: flex;
+      gap: 3vw;
+      li {
+        box-sizing: border-box;
+        border-radius: 1vw 1vw 0 0;
+        background-color: $gray;
+        color: $darkGreen;
+        cursor: pointer;
+        padding: 2vh 3vw;
+        &.select {
+          background-color: $lightGreen;
+        }
+      }
+    }
+  }
+  main {
+    background: transparent linear-gradient(180deg, #d0e6a5 0%, #e1e3a3 100%);
+    border-radius: 0 0 1vw 1vw;
+    height: 50vh;
+    padding: 0 9.23vw;
+    .title {
+      color: $darkGreen2;
+      cursor: pointer;
+      font-size: 6.666vw;
+      padding: 4vh 0;
+      margin-left: 14.102vw;
+      img {
+        width: 15vw;
+      }
+      span {
+        vertical-align: text-top;
+      }
+    }
+    .inputBox {
+      width: 100%;
+      height: 8vh;
+    }
+    .boxStyle {
+      box-sizing: border-box;
+      border: none;
+      border-radius: 1vw;
+      color: $darkGreen2;
+      font-size: 6.158vw;
+    }
+    input {
+      margin-top: 2vh;
+      padding-left: 6.153vw;
+    }
+    #selectContainer {
+      position: relative;
+      &:after {
+        content: "";
+        border-style: solid;
+        border-width: 1.75vh 1.2vh 1.75vh 1.2vh;
+        border-color: $blue transparent transparent transparent;
+        //通過定位將圖標放在合適的位置
+        position: absolute;
+        right: 7.179vw;
+        top: 3.125vh;
+        //給自定義的圖標實現點擊下來功能
+        pointer-events: none;
+      }
+      select {
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+        padding-left: 6.153vw;
+        //隱藏select的下拉圖標
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+      }
+    }
+
+    .searchBtn {
+      width: 100%;
+      height: 8vh;
+      background-color: $blue;
+      border: none;
+      border-radius: 1vw;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 4vh;
+      img {
+        width: 10vw;
+        height: 10vw;
+      }
+    }
+  }
+}

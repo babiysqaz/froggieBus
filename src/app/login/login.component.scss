@@ -1,0 +1,86 @@
+@import "src/variable.scss";
+
+.container {
+  background-color: $white;
+  width: 100vw;
+  height: 100vh;
+  text-align: center;
+  .topContainer {
+    height: 40vh;
+    .logo {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 40vw;
+      height: 30vh;
+    }
+    .logoTitle {
+      height: 4.625vh;
+      color: $brightGreen;
+      letter-spacing: 3.9px;
+      text-align: left;
+      font-size: 6.666vw;
+      padding-top: 10vh;
+      padding-left: 8.205vw;
+    }
+    .logoText {
+      height: 2.375vh;
+      color: $green;
+      letter-spacing: 3.9px;
+      text-align: left;
+      font-size: 3vw;
+      margin-top: 1vh;
+      padding-left: 8.205vw;
+    }
+  }
+
+  main {
+    display: flex;
+  }
+  .circleContainer {
+    width: 50vw;
+    height: 43.589vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    .greenBorder {
+      box-sizing: border-box;
+      border: 6px solid $lightGreen;
+      border-radius: 50%;
+      width: 43.589vw;
+      height: 43.589vw;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .greenCircle {
+        background-color: $lightGreen;
+        border-radius: 50%;
+        width: 36.923vw;
+        height: 36.923vw;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 8.205vw;
+        color: $darkGreen;
+      }
+    }
+  }
+  section{
+    margin-top: 2vh;
+    height: 43.589vw;
+  }
+  .creatorText{
+    color: $brightGreen;
+    position: absolute;
+    bottom: 0;
+    left: 6%;
+    margin-bottom: 2vh;
+  }
+}
+
+/* @media screen and (min-width: 1200px) {
+  div {
+     font-size: 36px;
+  }
+} */
