@@ -13,15 +13,47 @@
       <img src="assets/frogStandWhite.svg" alt="">
       <span>蛙蛙搭車Go</span>
     </div>
-    <div id="selectContainer" class="inputBox">
-      <select class="boxStyle" name="" id="">
-        <option value="">縣市</option>
+    <div *ngIf="pageIndex!==2" id="selectContainer" class="inputBox">
+      <select class="boxStyle" name="" id="citySelector">
+        <option *ngFor="let city of cityNameArr" [value]='city'>{{city}}</option>
       </select>
     </div>
-    <input class="inputBox boxStyle" type="text" [placeholder]='defaultText'>
-    <button class="searchBtn">
+    <input class="inputBox boxStyle" type="text" [placeholder]='defaultText' [(ngModel)]="routeName">
+    <button (click)="search(pageIndex)" class="searchBtn">
       <img src="assets/search.svg" alt="">
     </button>
+
+    <section *ngIf="pageIndex===0 && hasSearched && !isNull" class="line">
+      <div class="directionContainer">
+        <button (click)="switchdirection(0)" [ngClass]="{'select':directionSelectArr[0]}">
+          往 {{goals[0]}}
+        </button>
+        <button (click)="switchdirection(1)" [ngClass]="{'select':directionSelectArr[1]}">
+          往 {{goals[1]}}
+        </button>
+      </div>
+
+      <div class="lineContainer">
+        <div class="line" *ngFor="let stop of busStops[direction]">
+          <div class="busStatus" [ngClass]="busStatus">{{busStatusText}}</div>
+          <span class="lineText" [ngClass]="busStatus">{{stop}}</span>
+          <div class="circle" [ngClass]="busStatus"></div>
+        </div>
+
+      </div>
+    </section>
+
+    <section *ngIf="pageIndex===2 && hasSearched">
+
+    </section>
   </main>
 
+  <section *ngIf="pageIndex===1 && hasSearched">
+
+  </section>
+
+  <section *ngIf="hasSearched && isNull">
+    <img class="frogFail" src="assets/frogFail.svg" alt="">
+    <p class="frogFailText">沒有結果</p>
+  </section>
 </div>

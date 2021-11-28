@@ -7,12 +7,13 @@
   text-align: center;
   .topContainer {
     height: 40vh;
+    padding-left: 8.205vw;
     .logo {
       position: absolute;
       top: 0;
       right: 0;
-      width: 40vw;
-      height: 30vh;
+      width: 45vw;
+      height: 33.5vh;
     }
     .logoTitle {
       height: 4.625vh;
@@ -21,16 +22,14 @@
       text-align: left;
       font-size: 6.666vw;
       padding-top: 10vh;
-      padding-left: 8.205vw;
     }
     .logoText {
       height: 2.375vh;
       color: $green;
-      letter-spacing: 3.9px;
+      letter-spacing: 0.26px;
       text-align: left;
-      font-size: 3vw;
+      font-size: 3.333vw;
       margin-top: 1vh;
-      padding-left: 8.205vw;
     }
   }
 
