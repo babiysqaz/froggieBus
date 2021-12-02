@@ -34,12 +34,11 @@
       </div>
 
       <div class="lineContainer">
-        <div class="line" *ngFor="let stop of busStops[direction]">
-          <div class="busStatus" [ngClass]="busStatus">{{busStatusText}}</div>
-          <span class="lineText" [ngClass]="busStatus">{{stop}}</span>
-          <div class="circle" [ngClass]="busStatus"></div>
+        <div class="line" *ngFor="let stop of busStops[direction].stops;let i = index">
+          <div class="busStatus" [ngClass]="busStops[direction].busStatusClass[i]">{{busStops[direction].busStatus[i]}}</div>
+          <span class="lineText" [ngClass]="busStops[direction].busStatusClass[i]">{{stop}}</span>
+          <div class="circle" [ngClass]="busStops[direction].busStatusClass[i]"></div>
         </div>
-
       </div>
     </section>
 

@@ -20,8 +20,7 @@ export class HomeComponent implements OnInit {
   public isSearching = false;
   public hasSearched = false;
   public isNull = false;
-  public busStatus: 'approaching' | 'moving' | 'notMoving' = 'notMoving';
-  public busStatusText: '未發車' | '進站中' | 'mins' = '未發車';
+  public busStatusClass: 'approaching' | 'moving' | 'notMoving' = 'notMoving';
   public cityNameArr = [
     '臺北市', '新北市', '桃園市', '臺中市', '臺南市', '高雄市', '基隆市', '新竹市', '嘉義市',
     '宜蘭縣', '新竹縣', '苗栗縣', '彰化縣', '南投縣', '雲林縣', '嘉義縣', '屏東縣', '花蓮縣', '臺東縣', '金門縣', '澎湖縣', '連江縣'
@@ -100,31 +99,47 @@ export class HomeComponent implements OnInit {
   }
 
   async searchLine(cityName: string) {
-    this.busStops = [[], []];
+    //busStatus:0:'正常',1:'尚未發車',2:'交管不停靠',3:'末班車已過',4:'今日未營運'
+    this.busStops = [
+      { stops: [], EstimatedTime: [], busStatus: [], busStatusClass: [] },
+      { stops: [], EstimatedTime: [], busStatus: [], busStatusClass: [] }
+    ];
     this.goals = ['', ''];
     const stopOfRouteUrl = "https://ptx.transportdata.tw/MOTC/v2/Bus/StopOfRoute/City/" + cityName + '/' + this.routeName + "?$filter=RouteID%20eq%20'" + this.routeName + "'&$top=30&$format=JSON";
     this.http.get(stopOfRouteUrl, {
       headers: this.getAuthorizationHeader()
     }).subscribe((res: any) => {
-      console.log(res);
       if (res.length !== 0) {
         this.goals[0] = res[1].Stops[0].StopName.Zh_tw;
         this.goals[1] = res[0].Stops[0].StopName.Zh_tw;
-
         for (let index = 0; index < res[1].Stops.length; index++) {
-          this.busStops[0].push(res[0].Stops[index].StopName.Zh_tw);
-          this.busStops[1].push(res[1].Stops[index].StopName.Zh_tw);
+          this.busStops[0].stops.push(res[0].Stops[index].StopName.Zh_tw);
+          this.busStops[1].stops.push(res[1].Stops[index].StopName.Zh_tw);
         }
       } else {
         this.isNull = true;
       }
     });
 
-    /* const estimatedTimeOfArrivalUrl = "https://ptx.transportdata.tw/MOTC/v2/Bus/EstimatedTimeOfArrival/City/" + cityName + '/' + this.routeName + "?$filter=RouteID%20eq%20'" + this.routeName + "'&$top=30&$format=JSON";
+    const estimatedTimeOfArrivalUrl = "https://ptx.transportdata.tw/MOTC/v2/Bus/EstimatedTimeOfArrival/City/" + cityName + '/' + this.routeName + "?$filter=RouteID%20eq%20'" + this.routeName + "'&$orderby=StopSequence" + "&$format=JSON";
     this.http.get(estimatedTimeOfArrivalUrl, {
       headers: this.getAuthorizationHeader()
-    }).subscribe((res) => {
-    }); */
+    }).subscribe((res: any) => {
+      res.forEach((element: any) => {
+        //public busStatusClass: 'approaching' | 'moving' | 'notMoving' = 'notMoving';
+        if (element.Direction === 0) {
+          this.busStops[0].EstimatedTime.push(element);
+          this.switchBusStatus(element, 0);
+        } else {
+          this.busStops[1].EstimatedTime.push(element);
+          this.switchBusStatus(element, 1);
+        }
+      });
+      console.log(this.busStops);
+    });
+
+
+
   }
 
   async searchBusStation() {
@@ -140,6 +155,38 @@ export class HomeComponent implements OnInit {
     this.directionSelectArr[num] = true;
     this.direction = num;
   }
+
+  switchBusStatus(element: any, index: number) {
+    switch (element.StopStatus) {
+      case 0:
+        //如果小於 1 分鐘，則顯示即將進站
+        if (Math.floor(element.EstimatedTime / 60)) {
+          this.busStops[index].busStatus.push('進站中');
+          this.busStops[index].busStatusClass.push('approaching');
+        } else {
+          this.busStops[index].busStatus.push(Math.floor(element.EstimatedTime / 60) + 'mins');
+          this.busStops[index].busStatusClass.push('moving');
+        }
+        break;
+      case 1:
+        this.busStops[index].busStatus.push('未發車');
+        this.busStops[index].busStatusClass.push('notMoving');
+        break;
+      case 2:
+        this.busStops[index].busStatus.push('未發車');
+        this.busStops[index].busStatusClass.push('notMoving');
+        break;
+      case 3:
+        this.busStops[index].busStatus.push('末班駛離');
+        this.busStops[index].busStatusClass.push('notMoving');
+        break;
+      case 4:
+        this.busStops[index].busStatus.push('未發車');
+        this.busStops[index].busStatusClass.push('notMoving');
+        break;
+    }
+  }
+
 
   getAuthorizationHeader() {
     var AppID = '56d46e9897a148bca3e3fd6c1e400cb0';
