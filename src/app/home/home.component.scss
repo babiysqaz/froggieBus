@@ -15,7 +15,7 @@
         font-size: 4.102vw;
         padding: 2vh 3vw;
         white-space: nowrap;
-        &.select {
+        &.selected {
           padding: 2vh 6vw;
           background-color: $lightGreen;
         }
@@ -40,45 +40,34 @@
         vertical-align: text-top;
       }
     }
-    .inputBox {
+    .boxStyle {
       width: 100%;
       height: 8vh;
-    }
-    .boxStyle {
       background-color: $white;
       box-sizing: border-box;
       border: none;
       border-radius: 1vw;
       color: $darkGreen2;
       font-size: 6.158vw;
-    }
-    input {
-      margin-top: 2vh;
       padding-left: 6.153vw;
     }
-    #selectContainer {
+    .selectContainer {
       position: relative;
-      &:after {
+      #citySelector {
+        cursor: pointer;
+        //隱藏select的下拉圖標
+        appearance: none;
+      }
+      &::after {
         content: "";
         border-style: solid;
         border-width: 1.75vh 1.2vh 1.75vh 1.2vh;
         border-color: $blue transparent transparent transparent;
-        //通過定位將圖標放在合適的位置
         position: absolute;
         right: 7.179vw;
         top: 3.125vh;
         //給自定義的圖標實現點擊下來功能
         pointer-events: none;
-      }
-      select {
-        width: 100%;
-        height: 100%;
-        cursor: pointer;
-        padding-left: 6.153vw;
-        //隱藏select的下拉圖標
-        appearance: none;
-        -webkit-appearance: none;
-        -moz-appearance: none;
       }
     }
     .searchBtn {
@@ -91,13 +80,12 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-top: 4vh;
       img {
         width: 11.5vw;
         height: 11.5vw;
       }
     }
-    section.line {
+    .searchLine {
       .directionContainer {
         height: 6vh;
         margin-top: 3vh;
@@ -114,7 +102,7 @@
           &:nth-of-type(1) {
             margin-right: 2.564vw;
           }
-          &.select {
+          &.selected {
             background-color: $darkGreen;
             border: none;
             color: $gray;
@@ -162,12 +150,12 @@
           .circle {
             width: 4.871vw;
             height: 4.871vw;
-            border:3px solid $darkGreen;
+            border: 3px solid $darkGreen;
             border-radius: 50%;
             box-sizing: border-box;
             &.approaching {
-              width: 7.179vw;
-              height: 7.179vw;
+              // width: 7.179vw;
+              // height: 7.179vw;
               background-color: $darkGreen;
               border: none;
             }
@@ -175,16 +163,28 @@
         }
       }
     }
-  }
-  .frogFail{
-    width: 43.589vw;
-    height: 43.589vw;
-    display: block;
-    margin: 7vh auto 3vh;
-  }
-  .frogFailText{
-    color: $darkGreen2;
-    font-size: 6.153vw;
-    text-align: center;
+    .searchNearestBusStation {
+      margin-top: 4vh;
+      .line {
+        padding-bottom: 2vh;
+        display: grid;
+        grid-template-columns: 6.153vw 0.5fr 0.5fr;
+        grid-column-gap: 6.153vw;
+        align-items: center;
+      }
+    }
+    .frogFail {
+      img {
+        width: 43.589vw;
+        height: 43.589vw;
+        display: block;
+        margin: 7vh auto 3vh;
+      }
+      p {
+        color: $darkGreen2;
+        font-size: 6.153vw;
+        text-align: center;
+      }
+    }
   }
 }

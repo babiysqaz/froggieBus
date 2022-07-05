@@ -9,7 +9,7 @@
   <main>
     <div class="circleContainer">
       <div class="greenBorder">
-        <div (click)="routeTo(0)" class="greenCircle">
+        <div (click)="routeTo('searchLine')" class="greenCircle">
           找路線
         </div>
       </div>
@@ -17,7 +17,7 @@
 
     <div class="circleContainer">
       <div class="greenBorder">
-        <div (click)="routeTo(1)" class="greenCircle">
+        <div (click)="routeTo('searchBusStop')" class="greenCircle">
           找站牌
         </div>
       </div>
@@ -27,22 +27,10 @@
   <section>
     <div class="circleContainer">
       <div class="greenBorder">
-        <div (click)="routeTo(2)" class="greenCircle">
+        <div (click)="routeTo('searchNearestBusStation')" class="greenCircle">
           附近車站
         </div>
       </div>
     </div>
   </section>
 </div>
-
-<!-- <iframe
-  width="600"
-  height="450"
-  style="border:0"
-  loading="lazy"
-  allowfullscreen
-  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAYiKX31zRtkM0P05qkN3PM-jMFL3H7wtk
-    &q=Space+Needle,Seattle+WA">
-</iframe>
-
- -->

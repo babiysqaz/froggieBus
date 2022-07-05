@@ -1,3 +1,4 @@
+import { CommonService } from './../service/common.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -9,17 +10,16 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
 
   constructor(
-    private router:Router,
+    private router: Router,
+    private commonService: CommonService,
   ) { }
 
   ngOnInit(): void {
+    this.commonService.setPtxAuthorizationHeader();
   }
 
-  routeTo(num:number){
-    this.router.navigate(['/home'],{
-      queryParams:{
-        path:num,
-      }
-    })
+  routeTo(searchType: 'searchLine' | 'searchBusStop' | 'searchNearestBusStation') {
+    this.router.navigate(['/home']);
+    this.commonService.searchType = searchType;
   }
 }

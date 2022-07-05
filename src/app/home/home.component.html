@@ -1,58 +1,74 @@
 <div class="container">
   <nav>
     <ul>
-      <li (click)="switchTab(0)" [ngClass]="{'select':tabSelectArr[0]}">找路線</li>
-      <li (click)="switchTab(1)" [ngClass]="{'select':tabSelectArr[1]}">找站牌</li>
-      <li (click)="switchTab(2)" [ngClass]="{'select':tabSelectArr[2]}">附近車站</li>
-      <li (click)="routeLogin()">回首頁</li>
+      <li (click)="switchTab('searchLine')" [ngClass]="{'selected':searchType==='searchLine'}">找路線</li>
+      <li (click)="switchTab('searchBusStop')" [ngClass]="{'selected':searchType==='searchBusStop'}">找站牌</li>
+      <li (click)="switchTab('searchNearestBusStation')"
+        [ngClass]="{'selected':searchType==='searchNearestBusStation'}">附近車站</li>
+      <li (click)="toHomePage()">回首頁</li>
     </ul>
   </nav>
 
   <main>
-    <div class="title" (click)="routeLogin()">
+    <div class="title" (click)="toHomePage()">
       <img src="assets/frogStandWhite.svg" alt="">
       <span>蛙蛙搭車Go</span>
     </div>
-    <div *ngIf="pageIndex!==2" id="selectContainer" class="inputBox">
-      <select class="boxStyle" name="" id="citySelector">
-        <option *ngFor="let city of cityNameArr" [value]='city'>{{city}}</option>
-      </select>
-    </div>
-    <input class="inputBox boxStyle" type="text" [placeholder]='defaultText' [(ngModel)]="routeName">
-    <button (click)="search(pageIndex)" class="searchBtn">
-      <img src="assets/search.svg" alt="">
-    </button>
 
-    <section *ngIf="pageIndex===0 && hasSearched && !isNull" class="line">
-      <div class="directionContainer">
-        <button (click)="switchdirection(0)" [ngClass]="{'select':directionSelectArr[0]}">
-          往 {{goals[0]}}
-        </button>
-        <button (click)="switchdirection(1)" [ngClass]="{'select':directionSelectArr[1]}">
-          往 {{goals[1]}}
-        </button>
+    <section *ngIf="searchType==='searchLine'||searchType==='searchBusStop'">
+      <div class="selectContainer">
+        <select id="citySelector" class="boxStyle" name="">
+          <option *ngFor="let city of cityNameArr" [value]='city'>{{city}}</option>
+        </select>
       </div>
+      <input type="text" class="boxStyle" [placeholder]='tipText' [(ngModel)]="inputText" style="margin-top: 2vh;">
+      <button class="searchBtn" style="margin-top: 4vh;" (click)="search(searchType)">
+        <img src="assets/search.svg" alt="">
+      </button>
 
-      <div class="lineContainer">
-        <div class="line" *ngFor="let stop of busStops[direction].stops;let i = index">
-          <div class="busStatus" [ngClass]="busStops[direction].busStatusClass[i]">{{busStops[direction].busStatus[i]}}</div>
-          <span class="lineText" [ngClass]="busStops[direction].busStatusClass[i]">{{stop}}</span>
-          <div class="circle" [ngClass]="busStops[direction].busStatusClass[i]"></div>
+      <div *ngIf="searchType==='searchLine' && hasSearched && !isNull" class="searchLine">
+        <div class="directionContainer">
+          <button (click)="switchDirection(0)" [ngClass]="{'selected':direction===0}">
+            往 {{busStops[0].goal}}
+          </button>
+          <button (click)="switchDirection(1)" [ngClass]="{'selected':direction===1}">
+            往 {{busStops[1].goal}}
+          </button>
+        </div>
+
+        <div class="lineContainer">
+          <div class="line" *ngFor="let stop of busStops[direction].stops;let i = index">
+            <div class="busStatus" [ngClass]="busStops[direction].busStatusClass[i]">
+              {{busStops[direction].busStatus[i]}}
+            </div>
+            <span class="lineText" [ngClass]="busStops[direction].busStatusClass[i]">{{stop}}</span>
+            <div class="circle" [ngClass]="busStops[direction].busStatusClass[i]"></div>
+          </div>
         </div>
       </div>
     </section>
 
-    <section *ngIf="pageIndex===2 && hasSearched">
+    <section *ngIf="searchType==='searchNearestBusStation'">
+      <button *ngIf="!hasSearched" class="searchBtn" style="margin-top: 8vh" (click)="search(searchType)">
+        <img src="assets/pin_drop_white_24dp.svg" alt="">
+      </button>
 
+      <div *ngIf="hasSearched">
+        <iframe width="100%" height="250px" style="border:0" loading="lazy" allowfullscreen [src]="googleMapUrl">
+        </iframe>
+        <div class="searchNearestBusStation">
+          <div class="line" *ngFor="let station of nearestBusStations">
+            <img src="assets/location_on_black_24dp.svg" alt="">
+            <span>{{station.stationName}}</span>
+            <span>-距離{{station.distance}}m</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section *ngIf="hasSearched && isNull" class="frogFail">
+      <img src="assets/frogFail.svg" alt="">
+      <p>沒有結果</p>
     </section>
   </main>
-
-  <section *ngIf="pageIndex===1 && hasSearched">
-
-  </section>
-
-  <section *ngIf="hasSearched && isNull">
-    <img class="frogFail" src="assets/frogFail.svg" alt="">
-    <p class="frogFailText">沒有結果</p>
-  </section>
 </div>
