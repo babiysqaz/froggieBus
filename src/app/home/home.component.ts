@@ -3,9 +3,17 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { SwitchToEnglishService } from '../service/switch-to-english.service';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
 import { lastValueFrom } from 'rxjs';
+
+interface BusStops {
+  goal: string,
+  stops: Array<string>,
+  EstimatedTime: Array<number>,
+  busStatus: Array<'進站中' | '未發車' | '末班駛離' | string>,
+  busStatusClass: Array<'approaching' | 'moving' | 'notMoving'>,
+}
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -24,10 +32,10 @@ export class HomeComponent implements OnInit {
     '宜蘭縣', '新竹縣', '苗栗縣', '彰化縣', '南投縣', '雲林縣', '嘉義縣', '屏東縣', '花蓮縣', '臺東縣', '金門縣', '澎湖縣', '連江縣'
   ];
   public inputText = '';
-  public busStops: any = [];
-  public nearestBusStations: Array<any> = [];
-  public googleMapUrl: any;
-  location: any;
+  public busStops: Array<BusStops> = [];
+  public nearestBusStations: Array<{ stationName: string, distance: number, }> = [];
+  public googleMapUrl: SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl('');
+  private location: { longitude: number, latitude: number } = { longitude: 0, latitude: 0 };
 
   constructor(
     private router: Router,
@@ -85,6 +93,9 @@ export class HomeComponent implements OnInit {
     this.isSearching = false;
   }
 
+  /**
+   * 取得該公車的最新動態及路線資訊
+   */
   async searchLine(cityName: string) {
     //busStatus:0:'正常',1:'尚未發車',2:'交管不停靠',3:'末班車已過',4:'今日未營運'
     this.busStops = [
@@ -132,7 +143,7 @@ export class HomeComponent implements OnInit {
    * 取得鄰近公車站點資訊
    */
   async searchNearestBusStation() {
-    this.location = await this.commonService.getPosition().catch((err) => { console.log(err); });
+    this.location = await this.commonService.getPosition().catch((err: Error) => { console.log(err); });
     this.googleMapUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.google.com/maps/embed/v1/search?q=%E5%85%AC%E8%BB%8A%E7%AB%99&key=${environment.googleMapKey}&center=${this.location.latitude},${this.location.longitude}&zoom=14`);
     this.nearestBusStations = [];
 
