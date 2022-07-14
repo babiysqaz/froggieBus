@@ -29,20 +29,20 @@
       <div *ngIf="searchType==='searchLine' && hasSearched && !isNull" class="searchLine">
         <div class="directionContainer">
           <button (click)="switchDirection(0)" [ngClass]="{'selected':direction===0}">
-            往 {{busStops[0].goal}}
+            往 {{busLines[0].goal}}
           </button>
           <button (click)="switchDirection(1)" [ngClass]="{'selected':direction===1}">
-            往 {{busStops[1].goal}}
+            往 {{busLines[1].goal}}
           </button>
         </div>
 
         <div class="lineContainer">
-          <div class="line" *ngFor="let stop of busStops[direction].stops;let i = index">
-            <div class="busStatus" [ngClass]="busStops[direction].busStatusClass[i]">
-              {{busStops[direction].busStatus[i]}}
+          <div class="line" *ngFor="let stop of busLines[direction].stopNames;let i = index">
+            <div class="busStatus" [ngClass]="busLines[direction].busStatusClass[i]">
+              {{busLines[direction].busStatus[i]}}
             </div>
-            <span class="lineText" [ngClass]="busStops[direction].busStatusClass[i]">{{stop}}</span>
-            <div class="circle" [ngClass]="busStops[direction].busStatusClass[i]"></div>
+            <span class="lineText" [ngClass]="busLines[direction].busStatusClass[i]">{{stop}}</span>
+            <div class="circle" [ngClass]="busLines[direction].busStatusClass[i]"></div>
           </div>
         </div>
       </div>
