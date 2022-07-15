@@ -6,7 +6,6 @@ import { SwitchToEnglishService } from '../service/switch-to-english.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
 import { lastValueFrom } from 'rxjs';
-
 interface BusLines {
   goal: string,
   stopNames: Array<string>,
@@ -14,7 +13,6 @@ interface BusLines {
   busStatus: Array<'進站中' | '未發車' | '末班駛離' | string>,
   busStatusClass: Array<'approaching' | 'moving' | 'notMoving'>,
 }
-
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -65,9 +63,6 @@ export class HomeComponent implements OnInit {
       case 'searchBusStop':
         this.tipText = '請輸入欲查詢站牌名';
         break;
-      case 'searchNearestBusStation':
-        this.tipText = '請輸入地址或使用定位';
-        break;
     }
   }
 
@@ -110,12 +105,12 @@ export class HomeComponent implements OnInit {
       .then((res: any) => {
         if (res.length === 0) {
           this.isNull = true;
-        } else {
-          this.busLines[0].goal = res[1].Stops[0].StopName.Zh_tw;
-          this.busLines[1].goal = res[0].Stops[0].StopName.Zh_tw;
-          this.busLines[0].stopNames = res[0].Stops.map((element: any) => element.StopName.Zh_tw);
-          this.busLines[1].stopNames = res[1].Stops.map((element: any) => element.StopName.Zh_tw);
+          return;
         }
+        this.busLines[0].goal = res[1].Stops[0].StopName.Zh_tw;
+        this.busLines[1].goal = res[0].Stops[0].StopName.Zh_tw;
+        this.busLines[0].stopNames = res[0].Stops.map((element: any) => element.StopName.Zh_tw);
+        this.busLines[1].stopNames = res[1].Stops.map((element: any) => element.StopName.Zh_tw);
       });
 
     const promise2 = lastValueFrom(this.httpClient.get(
@@ -124,23 +119,23 @@ export class HomeComponent implements OnInit {
       .then((res: any) => {
         if (res.length === 0) {
           this.isNull = true;
-        } else {
-          res.forEach((element: any) => {
-            if (element.Direction === 0) {
-              this.busLines[0].estimatedTime.push(element);
-              this.switchBusStatus(element, 0);
-            } else {
-              this.busLines[1].estimatedTime.push(element);
-              this.switchBusStatus(element, 1);
-            }
-          });
+          return;
         }
+        res.forEach((element: any) => {
+          if (element.Direction === 0) {
+            this.busLines[0].estimatedTime.push(element);
+            this.switchBusStatus(element, 0);
+            return;
+          }
+          this.busLines[1].estimatedTime.push(element);
+          this.switchBusStatus(element, 1);
+        });
       });
     await Promise.all([promise1, promise2]);
   }
 
   /**
-   * 取得經過該公車站牌的所有公車資訊
+   * 取得即將經過該公車站牌的所有公車資訊
    */
   async searchBusStation(cityName: string) {
     return lastValueFrom(this.httpClient.get<any>(
@@ -149,11 +144,11 @@ export class HomeComponent implements OnInit {
       .then(res => {
         if (res.length === 0) {
           this.isNull = true;
-        } else {
-          this.busStops = res
-            .filter((item: any) => item.StopStatus === 0)// 0 代表有發車
-            .map((item: any) => ({ stopName: item.StopName.Zh_tw, estimatedTime: Math.floor(item.EstimateTime / 60) }))
+          return;
         }
+        this.busStops = res
+          .filter((item: any) => item.StopStatus === 0)// 0 代表有發車
+          .map((item: any) => ({ stopName: item.StopName.Zh_tw, estimatedTime: Math.floor(item.EstimateTime / 60) }))
       });
   }
 
@@ -169,15 +164,16 @@ export class HomeComponent implements OnInit {
       .then((res: any) => {
         if (res.length === 0) {
           this.isNull = true;
-        } else {
-          this.nearestBusStations = res.map((element: any) =>
-          ({
-            stationName: element.StationName.Zh_tw,
-            distance: this.commonService.getDistance(this.location.latitude, this.location.longitude, element.StationPosition.PositionLat, element.StationPosition.PositionLon),
-          })
-          )
-          this.nearestBusStations.sort((a, b) => a.distance - b.distance);
+          return;
         }
+        this.nearestBusStations = res
+          .map((element: any) => (
+            {
+              stationName: element.StationName.Zh_tw,
+              distance: this.commonService.getDistance(this.location.latitude, this.location.longitude, element.StationPosition.PositionLat, element.StationPosition.PositionLon),
+            }
+          ))
+        this.nearestBusStations.sort((a, b) => a.distance - b.distance);
       })
   }
 
@@ -192,10 +188,10 @@ export class HomeComponent implements OnInit {
         if (element.EstimateTime / 60 < 1) {
           this.busLines[index].busStatus.push('進站中');
           this.busLines[index].busStatusClass.push('approaching');
-        } else {
-          this.busLines[index].busStatus.push(Math.floor(element.EstimateTime / 60) + 'mins');
-          this.busLines[index].busStatusClass.push('moving');
+          return;
         }
+        this.busLines[index].busStatus.push(Math.floor(element.EstimateTime / 60) + 'mins');
+        this.busLines[index].busStatusClass.push('moving');
         break;
       case 1:
         this.busLines[index].busStatus.push('未發車');
