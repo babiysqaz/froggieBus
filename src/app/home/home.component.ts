@@ -148,7 +148,7 @@ export class HomeComponent implements OnInit {
         }
         this.busStops = res
           .filter((item: any) => item.StopStatus === 0)// 0 代表有發車
-          .map((item: any) => ({ stopName: item.StopName.Zh_tw, estimatedTime: Math.floor(item.EstimateTime / 60) }))
+          .map((item: any) => ({ stopName: item.RouteName.Zh_tw, estimatedTime: Math.floor(item.EstimateTime / 60) }))
       });
   }
 
