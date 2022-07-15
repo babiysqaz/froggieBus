@@ -55,7 +55,7 @@
       position: relative;
       #citySelector {
         cursor: pointer;
-        //隱藏select的下拉圖標
+        // 隱藏select的下拉圖標
         appearance: none;
       }
       &::after {
@@ -66,7 +66,7 @@
         position: absolute;
         right: 7.179vw;
         top: 3.125vh;
-        //給自定義的圖標實現點擊下來功能
+        // 給自定義的圖標實現點擊下來功能
         pointer-events: none;
       }
     }
@@ -109,82 +109,102 @@
           }
         }
       }
-      .lineContainer {
-        .line {
-          height: 4vh;
-          padding-bottom: 2vh;
+      .line {
+        height: 4vh;
+        padding-bottom: 2vh;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        .busStatus {
+          width: 18.461vw;
+          height: 100%;
+          border-radius: 3px;
+          font-size: 4.102vw;
+          line-height: 100%;
+          margin-right: 2.564vw;
           display: flex;
-          justify-content: flex-start;
+          justify-content: center;
           align-items: center;
-          .busStatus {
-            width: 18.461vw;
-            height: 100%;
-            border-radius: 3px;
-            font-size: 4.102vw;
-            line-height: 100%;
-            margin-right: 2.564vw;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            &.notMoving {
-              background-color: $white;
-              color: $darkGreen;
-            }
-            &.moving {
-              background-color: transparent;
-              border: 1.5px solid $darkGreen;
-              color: $darkGreen;
-            }
-            &.approaching {
-              background-color: $darkGreen;
-              color: $white;
-            }
+          &.notMoving {
+            background-color: $white;
+            color: $darkGreen;
           }
-          .lineText {
-            color: $darkGreen2;
-            margin-right: auto;
-            &.approaching {
-              font-weight: bold;
-            }
+          &.moving {
+            background-color: transparent;
+            border: 1.5px solid $darkGreen;
+            color: $darkGreen;
           }
-          .circle {
-            width: 4.871vw;
-            height: 4.871vw;
-            border: 3px solid $darkGreen;
-            border-radius: 50%;
-            box-sizing: border-box;
-            &.approaching {
-              // width: 7.179vw;
-              // height: 7.179vw;
-              background-color: $darkGreen;
-              border: none;
-            }
+          &.approaching {
+            background-color: $darkGreen;
+            color: $white;
+          }
+        }
+        .lineText {
+          color: $darkGreen2;
+          margin-right: auto;
+          &.approaching {
+            font-weight: bold;
+          }
+        }
+        .circle {
+          width: 4.871vw;
+          height: 4.871vw;
+          border: 3px solid $darkGreen;
+          border-radius: 50%;
+          box-sizing: border-box;
+          &.approaching {
+            background-color: $darkGreen;
+            border: none;
           }
         }
       }
     }
     .searchNearestBusStation {
+      color: $darkGreen2;
       margin-top: 4vh;
       .line {
         padding-bottom: 2vh;
         display: grid;
-        grid-template-columns: 6.153vw 0.5fr 0.5fr;
-        grid-column-gap: 6.153vw;
+        grid-template-columns: 6.153vw 0.7fr 0.3fr;
+        grid-column-gap: 3vw;
         align-items: center;
+        .stationName {
+          font-size: 5.128vw;
+        }
+        .distance {
+          font-size: 4.102vw;
+        }
       }
     }
-    .frogFail {
-      img {
-        width: 43.589vw;
-        height: 43.589vw;
-        display: block;
-        margin: 7vh auto 3vh;
+  }
+  .searchBusStop {
+    color: $darkGreen;
+    margin-top: 4vh;
+    .line {
+      padding-bottom: 2vh;
+      display: grid;
+      grid-template-columns: 0 6.153vw 0.5fr 0.5fr;
+      grid-column-gap: 3vw;
+      align-items: center;
+      .stopName {
+        font-size: 5.128vw;
       }
-      p {
-        color: $darkGreen2;
-        font-size: 6.153vw;
-        text-align: center;
+      .estimateTime {
+        font-size: 4.102vw;
       }
+    }
+  }
+  .frogFail {
+    img {
+      width: 43.589vw;
+      height: 43.589vw;
+      display: block;
+      margin: 7vh auto 3vh;
+    }
+    p {
+      color: $darkGreen2;
+      font-size: 6.153vw;
+      text-align: center;
     }
   }
 }

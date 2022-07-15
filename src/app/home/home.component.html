@@ -36,14 +36,12 @@
           </button>
         </div>
 
-        <div class="lineContainer">
-          <div class="line" *ngFor="let stop of busLines[direction].stopNames;let i = index">
-            <div class="busStatus" [ngClass]="busLines[direction].busStatusClass[i]">
-              {{busLines[direction].busStatus[i]}}
-            </div>
-            <span class="lineText" [ngClass]="busLines[direction].busStatusClass[i]">{{stop}}</span>
-            <div class="circle" [ngClass]="busLines[direction].busStatusClass[i]"></div>
+        <div class="line" *ngFor="let stop of busLines[direction].stopNames;let i = index">
+          <div class="busStatus" [ngClass]="busLines[direction].busStatusClass[i]">
+            {{busLines[direction].busStatus[i]}}
           </div>
+          <span class="lineText" [ngClass]="busLines[direction].busStatusClass[i]">{{stop}}</span>
+          <div class="circle" [ngClass]="busLines[direction].busStatusClass[i]"></div>
         </div>
       </div>
     </section>
@@ -59,16 +57,24 @@
         <div class="searchNearestBusStation">
           <div class="line" *ngFor="let station of nearestBusStations">
             <img src="assets/location_on_black_24dp.svg" alt="">
-            <span>{{station.stationName}}</span>
-            <span>-距離{{station.distance}}m</span>
+            <span class="stationName">{{station.stationName}}</span>
+            <span class="distance">-距離{{station.distance}}m</span>
           </div>
         </div>
       </div>
     </section>
-
-    <section *ngIf="hasSearched && isNull" class="frogFail">
-      <img src="assets/frogFail.svg" alt="">
-      <p>沒有結果</p>
-    </section>
   </main>
+  <div *ngIf="searchType==='searchBusStop' && hasSearched && !isNull" class="searchBusStop">
+    <div class="line" *ngFor="let busStop of busStops">
+      <span></span>
+      <img src="assets/directions_bus_black_24dp.svg" alt="">
+      <span class="stopName">{{busStop.stopName}}</span>
+      <span class="estimateTime">- 還有 {{busStop.estimatedTime}}mins 進站</span>
+    </div>
+  </div>
+
+  <section *ngIf="hasSearched && isNull" class="frogFail">
+    <img src="assets/frogFail.svg" alt="">
+    <p>沒有結果</p>
+  </section>
 </div>

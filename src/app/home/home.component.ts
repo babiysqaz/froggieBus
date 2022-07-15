@@ -27,13 +27,13 @@ export class HomeComponent implements OnInit {
   public isSearching = false;
   public hasSearched = false;
   public isNull = false;
-  //public busStatusClass: 'approaching' | 'moving' | 'notMoving' = 'notMoving';
   public cityNameArr = [
     '臺北市', '新北市', '桃園市', '臺中市', '臺南市', '高雄市', '基隆市', '新竹市', '嘉義市',
     '宜蘭縣', '新竹縣', '苗栗縣', '彰化縣', '南投縣', '雲林縣', '嘉義縣', '屏東縣', '花蓮縣', '臺東縣', '金門縣', '澎湖縣', '連江縣'
   ];
   public inputText = '';
   public busLines: Array<BusLines> = [];
+  public busStops: Array<{ stopName: string, estimatedTime: number }> = [];
   public nearestBusStations: Array<{ stationName: string, distance: number, }> = [];
   public googleMapUrl: SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl('');
   private location: { longitude: number, latitude: number } = { longitude: 0, latitude: 0 };
@@ -78,7 +78,7 @@ export class HomeComponent implements OnInit {
     }
     this.isSearching = true;
         const citySelector = document.getElementById("citySelector") as HTMLSelectElement;
-        let cityName = this.switchToEnglishService.switchCityName(citySelector.value);
+    let cityName = this.switchToEnglishService.switchCityName(citySelector?.value);
     switch (searchType) {
       case 'searchLine':
         await this.searchLine(cityName);
@@ -98,7 +98,6 @@ export class HomeComponent implements OnInit {
    * 取得該公車的最新動態及路線資訊
    */
   async searchLine(cityName: string) {
-    //busStatus:0:'正常',1:'尚未發車',2:'交管不停靠',3:'末班車已過',4:'今日未營運'
     this.busLines = [
       { goal: '', stopNames: [], estimatedTime: [], busStatus: [], busStatusClass: [] },
       { goal: '', stopNames: [], estimatedTime: [], busStatus: [], busStatusClass: [] }
@@ -142,7 +141,20 @@ export class HomeComponent implements OnInit {
   /**
    * 取得經過該公車站牌的所有公車資訊
    */
-  async searchBusStation(cityName: string) { }
+  async searchBusStation(cityName: string) {
+    return lastValueFrom(this.httpClient.get<any>(
+      `https://ptx.transportdata.tw/MOTC/v2/Bus/EstimatedTimeOfArrival/City/${cityName}?$filter=contains(StopName%2FZh_tw%2C'${this.inputText}')&$format=JSON`,
+      { headers: environment.ptxAuthorizationHeader }))
+      .then(res => {
+        if (res.length === 0) {
+          this.isNull = true;
+        } else {
+          this.busStops = res
+            .filter((item: any) => item.StopStatus === 0)// 0 代表有發車
+            .map((item: any) => ({ stopName: item.StopName.Zh_tw, estimatedTime: Math.floor(item.EstimateTime / 60) }))
+        }
+      });
+  }
 
   /**
    * 取得鄰近公車站點資訊
