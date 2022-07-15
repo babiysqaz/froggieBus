@@ -25,8 +25,10 @@ export class CommonService {
    * 取得目標位置，若沒有參數則取得當前位置
    */
   getPosition(): any {
-    navigator.geolocation.getCurrentPosition(resp => {
-      return ({ longitude: resp.coords.longitude, latitude: resp.coords.latitude });
+    return new Promise((resolve) => {
+      navigator.geolocation.getCurrentPosition(resp => {
+        resolve({ longitude: resp.coords.longitude, latitude: resp.coords.latitude });
+      })
     })
   }
 

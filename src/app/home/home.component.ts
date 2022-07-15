@@ -77,7 +77,7 @@ export class HomeComponent implements OnInit {
       return;
     }
     this.isSearching = true;
-        const citySelector = document.getElementById("citySelector") as HTMLSelectElement;
+    const citySelector = document.getElementById("citySelector") as HTMLSelectElement;
     let cityName = this.switchToEnglishService.switchCityName(citySelector?.value);
     switch (searchType) {
       case 'searchLine':
@@ -124,15 +124,15 @@ export class HomeComponent implements OnInit {
         if (res.length === 0) {
           this.isNull = true;
         } else {
-        res.forEach((element: any) => {
-          if (element.Direction === 0) {
-            this.busLines[0].estimatedTime.push(element);
-            this.switchBusStatus(element, 0);
-          } else {
-            this.busLines[1].estimatedTime.push(element);
-            this.switchBusStatus(element, 1);
-          }
-        });
+          res.forEach((element: any) => {
+            if (element.Direction === 0) {
+              this.busLines[0].estimatedTime.push(element);
+              this.switchBusStatus(element, 0);
+            } else {
+              this.busLines[1].estimatedTime.push(element);
+              this.switchBusStatus(element, 1);
+            }
+          });
         }
       });
     await Promise.all([promise1, promise2]);
@@ -160,7 +160,7 @@ export class HomeComponent implements OnInit {
    * 取得鄰近公車站點資訊
    */
   async searchNearestBusStation() {
-    this.location = this.commonService.getPosition();
+    this.location = await this.commonService.getPosition();
     this.googleMapUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.google.com/maps/embed/v1/search?q=%E5%85%AC%E8%BB%8A%E7%AB%99&key=${environment.googleMapKey}&center=${this.location.latitude},${this.location.longitude}&zoom=14`);
     this.nearestBusStations = [];
 
@@ -169,13 +169,13 @@ export class HomeComponent implements OnInit {
         if (res.length === 0) {
           this.isNull = true;
         } else {
-          this.nearestBusStations = res.map((element: any) => {
-            ({
+          this.nearestBusStations = res.map((element: any) =>
+          ({
             stationName: element.StationName.Zh_tw,
             distance: this.commonService.getDistance(this.location.latitude, this.location.longitude, element.StationPosition.PositionLat, element.StationPosition.PositionLon),
           })
-          })
-        this.nearestBusStations.sort((a, b) => a.distance - b.distance);
+          )
+          this.nearestBusStations.sort((a, b) => a.distance - b.distance);
         }
       })
   }
