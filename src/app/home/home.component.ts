@@ -72,6 +72,7 @@ export class HomeComponent implements OnInit {
   }
 
   async search(searchType: 'searchLine' | 'searchBusStop' | 'searchNearestBusStation') {
+    this.isNull = false;
     if (this.isSearching) {
       console.log('還在讀取中');
       return;
