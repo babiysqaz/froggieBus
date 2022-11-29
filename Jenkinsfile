@@ -73,5 +73,19 @@ def notifyLINE(type, message) {
                 echo 'Hello World'
             }
         }
+        stage('Build') {
+            steps {
+                script{
+                  ng build --prod --base-href /froggieBus/
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                script{
+                  npx ngh --dir=dist/froggieBus
+                }
+            }
+        }
     }
 }
