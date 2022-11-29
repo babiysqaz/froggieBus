@@ -1,4 +1,4 @@
-pipeline {
+/* pipeline {
     agent any
     options {
         timeout(time: 10, unit: 'MINUTES')
@@ -62,4 +62,16 @@ def notifyLINE(type, message) {
     def imageThumbnail = isFailure ? 'https://i.imgur.com/T31BMsh.png' : 'https://imgur.com/IV2Dxph.png'
     def imageFullsize = isFailure ? 'https://i.imgur.com/T31BMsh.png' : 'https://imgur.com/IV2Dxph.png'
     sh "curl ${url} -H 'Authorization: Bearer ${token}' -F 'message=${message}' -F 'imageThumbnail=${imageThumbnail}' -F 'imageFullsize=${imageFullsize}'"
+}
+ */
+
+ pipeline {
+    agent any
+    stages {
+        stage('Example') {
+            steps {
+                echo 'Hello World'
+            }
+        }
+    }
 }
