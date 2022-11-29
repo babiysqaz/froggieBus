@@ -76,14 +76,15 @@ pipeline {
         stage('Build') {
       steps {
         script {
-          sh 'npm run build'
+          echo 'build project'
+          bat 'npm run build'
         }
       }
         }
         stage('Deploy') {
       steps {
         script {
-          sh 'git push https://github.com/babiysqaz/froggieBus.git master:gh-pages'
+          bat 'git push https://github.com/babiysqaz/froggieBus.git master:gh-pages'
         }
       }
         }
