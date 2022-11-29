@@ -65,27 +65,27 @@ def notifyLINE(type, message) {
 }
  */
 
- pipeline {
+pipeline {
     agent any
     stages {
         stage('Example') {
-            steps {
-                echo 'Hello World'
-            }
+      steps {
+        echo 'Hello World'
+      }
         }
         stage('Build') {
-            steps {
-                script{
-                  ng build --prod --base-href /froggieBus/
-                }
-            }
+      steps {
+        script {
+          sh 'ng build --prod --base-href /froggieBus/'
+        }
+      }
         }
         stage('Deploy') {
-            steps {
-                script{
-                  npx ngh --dir=dist/froggieBus
-                }
-            }
+      steps {
+        script {
+          sh 'npx ngh --dir=dist/froggieBus'
+        }
+      }
         }
     }
 }
