@@ -76,17 +76,15 @@ pipeline {
         stage('Build') {
       steps {
         script {
-          echo 'build project'
           bat 'npm install'
           bat 'npm run build'
-          bat 'node_modules/.bin/ng build'
         }
       }
         }
         stage('Deploy') {
       steps {
         script {
-          bat 'git push https://github.com/babiysqaz/froggieBus.git master:gh-pages'
+          bat 'git push -f https://github.com/babiysqaz/froggieBus.git master:gh-pages'
         }
       }
         }
