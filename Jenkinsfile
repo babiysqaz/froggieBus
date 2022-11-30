@@ -77,7 +77,9 @@ pipeline {
       steps {
         script {
           bat 'npm install'
-          bat 'npm run build'
+          //bat 'npm run build'
+          bat 'ng build --prod --base-href /froggieBus/'
+          bat 'npx ngh --dir=dist/froggieBus'
         }
       }
         }
