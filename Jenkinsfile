@@ -84,7 +84,8 @@ pipeline {
         stage('Deploy') {
       steps {
         script {
-          bat 'git push -f https://github.com/babiysqaz/froggieBus.git gh-pages'
+          bat 'git init'
+          bat 'git push -f https://github.com/babiysqaz/froggieBus.git master:gh-pages'
         }
       }
         }
