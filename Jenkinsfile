@@ -88,8 +88,6 @@ pipeline {
           bat 'git init'
           bat 'git add -A'
           bat "git commit -m 'deploy'"
-          bat 'git branch -r'
-          bat 'git status'
           bat 'git push origin master:gh-pages'
         }
       }
