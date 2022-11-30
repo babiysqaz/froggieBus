@@ -87,6 +87,8 @@ pipeline {
           bat 'git init'
           bat 'git add -A'
           bat "git commit -m 'deploy'"
+          bat 'git config --global user.email "babiysqaz@gmail.com"'
+          bat 'git config --global user.name "babiysqaz"'
           bat 'git push -f https://github.com/babiysqaz/froggieBus.git master:gh-pages'
         }
       }
