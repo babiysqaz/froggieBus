@@ -76,19 +76,21 @@ pipeline {
         stage('Build') {
       steps {
         script {
-          bat 'npm install'
-          bat 'npm run build'
+          bat 'ng build --prod --base-href /froggieBus/'
+          bat "npx ngh --dir=dist/froggieBus'"
+          /* bat 'npm install'
+          bat 'npm run build' */
         }
       }
         }
         stage('Deploy') {
       steps {
         script {
-          bat 'cd dist'
+          /* bat 'cd dist'
           bat 'git init'
           bat 'git add -A'
           bat "git commit -m 'deploy'"
-          bat 'git push -f https://github.com/babiysqaz/froggieBus.git master:gh-pages'
+          bat 'git push -f https://github.com/babiysqaz/froggieBus.git master:gh-pages' */
         }
       }
         }
