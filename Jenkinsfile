@@ -87,8 +87,7 @@ pipeline {
           bat 'git init'
           bat 'git add -A'
           bat "git commit -m 'deploy'"
-          bat 'npx ngh --dir=dist/froggieBus'
-          //bat 'git push -f https://github.com/babiysqaz/froggieBus.git master:gh-pages'
+          bat 'git push -f https://github.com/babiysqaz/froggieBus.git master:gh-pages'
         }
       }
         }
