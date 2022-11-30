@@ -66,7 +66,6 @@ def notifyLINE(type, message) {
  */
 
 pipeline {
-    //test
     agent any
     stages {
         stage('Example') {
@@ -79,6 +78,7 @@ pipeline {
         script {
           bat 'npm install'
           bat 'npm run build'
+          bat 'cd dist'
         }
       }
         }
@@ -88,7 +88,7 @@ pipeline {
           bat 'git init'
           bat 'git add -A'
           bat "git commit -m 'deploy'"
-          bat 'git push -f https://github.com/babiysqaz/froggieBus.git gh-pages'
+          bat 'git push -f https://github.com/babiysqaz/froggieBus.git master:gh-pages'
         }
       }
         }
