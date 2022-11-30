@@ -66,6 +66,7 @@ def notifyLINE(type, message) {
  */
 
 pipeline {
+    //test
     agent any
     stages {
         stage('Example') {
