@@ -77,7 +77,6 @@ pipeline {
       steps {
         script {
           bat 'ng build --prod --base-href /froggieBus/'
-          bat "npx ngh --dir=dist/froggieBus'"
           /* bat 'npm install'
           bat 'npm run build' */
         }
@@ -86,6 +85,7 @@ pipeline {
         stage('Deploy') {
       steps {
         script {
+          bat "npx ngh --dir=dist/froggieBus'"
           /* bat 'cd dist'
           bat 'git init'
           bat 'git add -A'
