@@ -77,7 +77,9 @@ pipeline {
       steps {
         script {
           echo 'build project'
+          bat 'npm install'
           bat 'npm run build'
+          bat 'node_modules/.bin/ng build'
         }
       }
         }
