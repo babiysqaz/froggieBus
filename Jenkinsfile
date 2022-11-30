@@ -78,13 +78,13 @@ pipeline {
         script {
           bat 'npm install'
           bat 'npm run build'
-          bat 'cd dist'
         }
       }
         }
         stage('Deploy') {
       steps {
         script {
+          bat 'cd dist'
           bat 'git init'
           bat 'git add -A'
           bat "git commit -m 'deploy'"
