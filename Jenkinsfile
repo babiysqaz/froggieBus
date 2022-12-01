@@ -79,9 +79,6 @@ pipeline {
         stage('Deploy') {
       steps {
         script {
-          bat 'git checkout master'
-          bat 'git branch'
-          bat 'git branch -r'
           bat 'git ls-files'
           bat 'git init'
           bat 'git add -f dist'
