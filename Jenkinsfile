@@ -84,7 +84,8 @@ pipeline {
           bat 'git branch -r'
           bat 'git ls-files'
           bat 'git init'
-          bat 'git add -f dist'
+          bat 'cd dist'
+          bat 'git add -A'
           bat "git commit -m 'deploy'"
           //bat 'git push -f https://github.com/babiysqaz/froggieBus.git master:gh-pages'
         }
