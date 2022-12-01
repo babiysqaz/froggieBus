@@ -79,7 +79,7 @@ pipeline {
         stage('Deploy') {
       steps {
         script {
-          bat 'git checkout master'
+          //bat 'git checkout master'
           bat 'git branch'
           bat 'git branch -r'
           bat 'git ls-files'
