@@ -80,6 +80,7 @@ pipeline {
       steps {
         script {
           bat "git commit -m 'head'"
+          bat 'git add -A'
           bat 'git checkout master'
           bat 'git branch'
           bat 'git branch -r'
