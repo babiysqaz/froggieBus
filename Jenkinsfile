@@ -68,14 +68,6 @@ def notifyLINE(type, message) {
 pipeline {
     agent any
     stages {
-        stage('pull') {
-      steps {
-        bat 'git checkout master'
-        bat 'git branch'
-        bat 'git branch -r'
-        bat 'git pull https://github.com/babiysqaz/froggieBus.git master'
-      }
-        }
         stage('Build') {
       steps {
         script {
@@ -87,6 +79,9 @@ pipeline {
         stage('Deploy') {
       steps {
         script {
+          bat 'git checkout master'
+          bat 'git branch'
+          bat 'git branch -r'
           bat 'git ls-files'
           bat 'git init'
           bat 'git add -f dist'
