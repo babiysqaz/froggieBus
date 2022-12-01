@@ -79,11 +79,8 @@ pipeline {
         stage('Deploy') {
       steps {
         script {
-          bat 'git ls-files'
-          bat 'git init'
-          bat 'git add -f dist'
-          bat "git commit -m 'deploy'"
-          bat 'git push -f https://github.com/babiysqaz/froggieBus.git master:gh-pages'
+          bat 'rmdir /q /s "C:/Users/babiy/nginx-1.22.1/html/dist"'
+          bat 'xcopy /y /e /i "C:/ProgramData/Jenkins/.jenkins/workspace/test2/dist" "C:/Users/babiy/nginx-1.22.1/html/dist"'
         }
       }
         }
