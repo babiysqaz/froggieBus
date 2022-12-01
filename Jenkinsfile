@@ -85,6 +85,7 @@ pipeline {
       steps {
         script {
           bat 'git ls-files'
+          bat 'git checkout master'
           bat 'git init'
           bat 'git add -f dist'
           bat "git commit -m 'deploy'"
