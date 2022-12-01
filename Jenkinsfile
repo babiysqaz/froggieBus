@@ -80,7 +80,7 @@ pipeline {
       steps {
         script {
           bat 'rmdir /q /s "C:/Users/babiy/nginx-1.22.1/html/dist"'
-          bat 'xcopy /y /e /i "C:/ProgramData/Jenkins/.jenkins/workspace/test2/dist" "C:/Users/babiy/nginx-1.22.1/html/dist"'
+          bat 'xcopy /y /e /i "C:/ProgramData/Jenkins/.jenkins/workspace/test2/dist" "C:/Users/babiy/nginx-1.22.1/html"'
         }
       }
         }
