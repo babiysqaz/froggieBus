@@ -70,6 +70,9 @@ pipeline {
     stages {
         stage('pull') {
       steps {
+        bat 'git checkout master'
+        bat 'git branch'
+        bat 'git branch -r'
         bat 'git pull https://github.com/babiysqaz/froggieBus.git master'
       }
         }
@@ -85,12 +88,9 @@ pipeline {
       steps {
         script {
           bat 'git ls-files'
-          bat 'git checkout master'
           bat 'git init'
           bat 'git add -f dist'
           bat "git commit -m 'deploy'"
-          bat 'git branch'
-          bat 'git branch -r'
           bat 'git push -f https://github.com/babiysqaz/froggieBus.git master:gh-pages'
         }
       }
